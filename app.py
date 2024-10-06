@@ -5,6 +5,7 @@ from typing import NoReturn, Optional
 from configobj import ConfigObj
 from flask import Flask, request, render_template
 from flask_limiter import Limiter
+from waitress import serve
 
 from modules import common, database
 from modules import login
@@ -140,4 +141,7 @@ def get():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5500, debug=debug_mode)
+    if debug_mode:
+        app.run(host='0.0.0.0', port=5500, debug=debug_mode)
+    else:
+        serve(app, host='0.0.0.0', port=5500)
